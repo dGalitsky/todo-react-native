@@ -41,12 +41,12 @@ class Api {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
   }
 
-  async updateTodoById(id: string, title: string) {
+  async updateTodoById({ id, title, completed }: ITodo) {
     const todos = await this.getTodos()
     const index = todos.findIndex(todo => todo.id === id)
     if (index === -1) return
 
-    todos[index].title = title
+    todos[index] = { ...todos[index], title, completed }
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
   }
 }
