@@ -7,7 +7,7 @@ import {
   TextInputSubmitEditingEventData,
   TouchableOpacity,
 } from "react-native"
-import { colors, spacing } from "../constants/style"
+import { borderRadius, colors, spacing } from "../constants/style"
 import { useTodosQuery } from "../hooks/useTodosQuery"
 
 export const Todo = ({ id, title, completed }: ITodo) => {
@@ -47,9 +47,10 @@ export const Todo = ({ id, title, completed }: ITodo) => {
           autoFocus
           selectTextOnFocus
           onBlur={onBlur}
+          style={styles.text}
         />
       ) : (
-        <Text style={completed && styles.completed}>{title}</Text>
+        <Text style={[styles.text, completed && styles.completed]}>{title}</Text>
       )}
 
       <TouchableOpacity onPress={onDeletePress}>
@@ -66,11 +67,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.m,
     paddingVertical: spacing.m,
     marginBottom: spacing.s,
-    borderColor: colors.primary,
-    borderWidth: 1,
-    borderRadius: 8,
+    backgroundColor: colors.secondary,
+    borderRadius,
+
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
   },
   completed: {
     textDecorationLine: "line-through",
+  },
+  text: {
+    color: colors.text,
   },
 })

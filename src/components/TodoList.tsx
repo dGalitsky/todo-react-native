@@ -1,14 +1,18 @@
-import React, { useCallback, useState } from "react"
-import { FlatList, ListRenderItem, StyleSheet, View } from "react-native"
-import { spacing } from "../constants/style"
+import { AnimatePresence } from "moti"
+import React, { useCallback, useRef, useState } from "react"
+import { FlatList, ListRenderItem, StyleSheet, TextInput, View } from "react-native"
+import { borderRadius, colors, spacing } from "../constants/style"
 import { useTodosQuery } from "../hooks/useTodosQuery"
-import { AddTodo } from "./AddTodo"
+import { AddTodoBtn } from "./AddTodoBtn"
 import { EFilter, Filter } from "./Filter"
+import { NewTodoInput } from "./NewTodoInput"
 import { Todo } from "./Todo"
 
 export const TodoList = () => {
   const { todos, addTodo } = useTodosQuery()
   const [filter, setFilter] = useState<EFilter>(EFilter.All)
+  const [isAdding, setIsAdding] = useState(false)
+  const addTodoRef = useRef<TextInput>(null)
 
   const onFilterChange = (filter: EFilter) => {
     setFilter(filter)
@@ -28,11 +32,45 @@ export const TodoList = () => {
     [filter],
   )
 
+  const onSubmitTodo = useCallback(
+    (value: string) => {
+      addTodo(value)
+      setIsAdding(false)
+      addTodoRef.current?.clear()
+    },
+    [addTodo],
+  )
+
+  const onAddTodoBlur = useCallback(() => {
+    addTodoRef.current?.clear()
+    setIsAdding(false)
+  }, [])
+
   return (
     <View style={styles.container}>
-      <AddTodo onSubmit={addTodo} />
       <Filter filter={filter} onChange={onFilterChange} />
-      <FlatList data={todos} renderItem={renderTodo} keyExtractor={(item) => item.id} />
+
+      <AnimatePresence>
+        {isAdding && (
+          <NewTodoInput ref={addTodoRef} onSubmit={onSubmitTodo} onBlur={onAddTodoBlur} />
+        )}
+      </AnimatePresence>
+
+      <FlatList
+        data={todos}
+        renderItem={renderTodo}
+        keyExtractor={(item) => item.id}
+        style={styles.list}
+      />
+
+      <AddTodoBtn
+        onPress={() => {
+          setIsAdding(true)
+          setTimeout(() => {
+            addTodoRef.current?.focus()
+          }, 300)
+        }}
+      />
     </View>
   )
 }
@@ -41,5 +79,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: spacing.m,
+  },
+  list: {
+    overflow: "visible",
   },
 })

@@ -1,5 +1,7 @@
-import { Text, TouchableOpacity } from "react-native"
 import React from "react"
+import { StyleSheet } from "react-native"
+import { spacing } from "../constants/style"
+import { ActionButton } from "./ActionButton"
 
 export enum EFilter {
   All = "all",
@@ -27,9 +29,14 @@ export const Filter = ({ filter, onChange }: IFilterProps) => {
     }
   }
 
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Text>Filter: {filter}</Text>
-    </TouchableOpacity>
-  )
+  return <ActionButton title={`Filter: ${filter}`} onPress={onPress} style={styles.button} />
 }
+
+const styles = StyleSheet.create({
+  button: {
+    position: "absolute",
+    bottom: spacing.m,
+    left: spacing.m,
+    zIndex: 1,
+  },
+})

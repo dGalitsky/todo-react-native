@@ -7,6 +7,11 @@ export const spacing = {
 }
 
 export const colors = {
-  primary: "#5D576B",
-  background: "#FCFCFC",
+  accent: "#1b263b",
+  background: "#fff",
+  secondary: "#fff",
+  textLight: "#fff",
+  text: "#0d1b2a",
 }
+
+export const borderRadius = 8
