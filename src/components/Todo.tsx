@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics"
 import React, { useCallback, useState } from "react"
 import {
   NativeSyntheticEvent,
@@ -19,6 +20,7 @@ export const Todo = ({ id, title, completed }: ITodo) => {
   }, [updateTodo, id, title, completed])
 
   const onLongPress = useCallback(() => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy)
     setIsEditing(true)
   }, [])
 
