@@ -7,7 +7,7 @@ export const STORAGE_KEY = "todos"
  * Todo interface that uses AsyncStorage as a fake API
  */
 class Api {
-  async getTodos() {
+  getTodos = async () => {
     const todos = await AsyncStorage.getItem(STORAGE_KEY)
     if (!todos) return []
 
@@ -18,7 +18,9 @@ class Api {
     }
   }
 
-  async addTodo(title: string) {
+  addTodo = async (title: string) => {
+    console.log("addTodo")
+
     const id = uuidv4()
     const todo = {
       id,
@@ -26,13 +28,15 @@ class Api {
     }
 
     const todos = await this.getTodos()
+    console.log("todos", todos)
     todos.unshift(todo)
+    console.log("new todos", todos)
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 
     return id
   }
 
-  async removeTodoById(id: string) {
+  removeTodoById = async (id: string) => {
     const todos = await this.getTodos()
     const index = todos.findIndex(todo => todo.id === id)
     if (index === -1) return
@@ -41,7 +45,7 @@ class Api {
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
   }
 
-  async updateTodoById({ id, title, completed }: ITodo) {
+  updateTodoById = async ({ id, title, completed }: ITodo) => {
     const todos = await this.getTodos()
     const index = todos.findIndex(todo => todo.id === id)
     if (index === -1) return
