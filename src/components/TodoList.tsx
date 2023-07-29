@@ -1,7 +1,7 @@
 import { AnimatePresence } from "moti"
 import React, { useCallback, useRef, useState } from "react"
 import { FlatList, ListRenderItem, StyleSheet, TextInput, View } from "react-native"
-import { borderRadius, colors, spacing } from "../constants/style"
+import { spacing } from "../constants/style"
 import { useTodosQuery } from "../hooks/useTodosQuery"
 import { AddTodoBtn } from "./AddTodoBtn"
 import { EFilter, Filter } from "./Filter"
