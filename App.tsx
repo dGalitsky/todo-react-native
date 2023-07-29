@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { SafeAreaView, StyleSheet } from "react-native"
+import { SafeAreaView, StatusBar, StyleSheet } from "react-native"
 import "react-native-get-random-values"
 import { TodoList } from "./src/components/TodoList"
-import { colors } from "./src/constants/style"
+import { colors, spacing } from "./src/constants/style"
 
 const queryClient = new QueryClient()
 
@@ -20,5 +20,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
+    marginTop: StatusBar.currentHeight ? StatusBar.currentHeight + spacing.m : 0,
   },
 })

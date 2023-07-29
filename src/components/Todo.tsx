@@ -2,6 +2,7 @@ import * as Haptics from "expo-haptics"
 import React, { useCallback, useState } from "react"
 import {
   NativeSyntheticEvent,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -41,7 +42,11 @@ export const Todo = ({ id, title, completed }: ITodo) => {
   }, [])
 
   return (
-    <TouchableOpacity onPress={onPress} onLongPress={onLongPress} style={styles.container}>
+    <TouchableOpacity
+      onPress={onPress}
+      onLongPress={onLongPress}
+      style={[styles.container, Platform.OS === "android" && styles.containerAndroid]}
+    >
       {isEditing ? (
         <TextInput
           defaultValue={title}
@@ -75,6 +80,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
+  },
+  containerAndroid: {
+    borderColor: colors.border,
+    borderWidth: 1,
+    elevation: 2,
   },
   completed: {
     textDecorationLine: "line-through",

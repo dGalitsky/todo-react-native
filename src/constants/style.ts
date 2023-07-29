@@ -12,6 +12,7 @@ export const colors = {
   secondary: "#fff",
   textLight: "#fff",
   text: "#0d1b2a",
+  border: "#F1F6F9",
 }
 
 export const borderRadius = 8
