@@ -7,7 +7,8 @@ A simple todo app built on React Native. It uses device storage as a fake API an
 - Press and hold on a todo to edit
 
 <p align="center">
-  <img src="./app.png" alt= “” width="400">
+  <img src="./screenshots/ios.png" alt= “” width="400">
+  <img src="./screenshots/android.jpg" alt= “” width="400">
 </p>
 
 ## Running the app
