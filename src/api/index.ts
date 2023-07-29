@@ -19,8 +19,6 @@ class Api {
   }
 
   addTodo = async (title: string) => {
-    console.log("addTodo")
-
     const id = uuidv4()
     const todo = {
       id,
@@ -28,9 +26,7 @@ class Api {
     }
 
     const todos = await this.getTodos()
-    console.log("todos", todos)
     todos.unshift(todo)
-    console.log("new todos", todos)
     await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 
     return id
