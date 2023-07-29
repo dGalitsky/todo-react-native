@@ -7,6 +7,7 @@ import { AddTodoBtn } from "./AddTodoBtn"
 import { EFilter, Filter } from "./Filter"
 import { NewTodoInput } from "./NewTodoInput"
 import { Todo } from "./Todo"
+import { Empty } from "./Empty"
 
 export const TodoList = () => {
   const { todos, addTodo } = useTodosQuery()
@@ -48,7 +49,7 @@ export const TodoList = () => {
 
   return (
     <View style={styles.container}>
-      <Filter filter={filter} onChange={onFilterChange} />
+      {todos?.length ? <Filter filter={filter} onChange={onFilterChange} /> : null}
 
       <AnimatePresence>
         {isAdding && (
@@ -56,12 +57,16 @@ export const TodoList = () => {
         )}
       </AnimatePresence>
 
-      <FlatList
-        data={todos}
-        renderItem={renderTodo}
-        keyExtractor={(item) => item.id}
-        style={styles.list}
-      />
+      {todos?.length ? (
+        <FlatList
+          data={todos}
+          renderItem={renderTodo}
+          keyExtractor={(item) => item.id}
+          style={styles.list}
+        />
+      ) : (
+        <Empty />
+      )}
 
       <AddTodoBtn
         onPress={() => {
