@@ -24,7 +24,7 @@ export const useTodosQuery = () => {
   }, [queryClient])
 
   const { mutate: addTodo } = useMutation(api.addTodo, {
-    onMutate: async title => {
+    onMutate: async (title) => {
       await queryClient.cancelQueries(QUERY_KEY)
       const previousTodos = queryClient.getQueryData<ITodo[]>(QUERY_KEY)
 
@@ -32,9 +32,7 @@ export const useTodosQuery = () => {
       const id = uuidv4()
       const todo = { id, title }
 
-      queryClient.setQueryData<ITodo[]>(QUERY_KEY, prev =>
-        prev ? [...prev, todo] : [todo]
-      )
+      queryClient.setQueryData<ITodo[]>(QUERY_KEY, (prev) => (prev ? [...prev, todo] : [todo]))
       return { previousTodos }
     },
 
@@ -48,11 +46,11 @@ export const useTodosQuery = () => {
   })
 
   const { mutate: removeTodo } = useMutation(api.removeTodoById, {
-    onMutate: async id => {
+    onMutate: async (id) => {
       await queryClient.cancelQueries(QUERY_KEY)
       const previousTodos = queryClient.getQueryData<ITodo[]>(QUERY_KEY)
-      queryClient.setQueryData<ITodo[]>(QUERY_KEY, prev =>
-        prev ? prev.filter(todo => todo.id !== id) : []
+      queryClient.setQueryData<ITodo[]>(QUERY_KEY, (prev) =>
+        prev ? prev.filter((todo) => todo.id !== id) : [],
       )
       return { previousTodos }
     },
@@ -66,12 +64,8 @@ export const useTodosQuery = () => {
     onMutate: async ({ id, title, completed }) => {
       await queryClient.cancelQueries(QUERY_KEY)
       const previousTodos = queryClient.getQueryData<ITodo[]>(QUERY_KEY)
-      queryClient.setQueryData<ITodo[]>(QUERY_KEY, prev =>
-        prev
-          ? prev.map(todo =>
-              todo.id === id ? { ...todo, title, completed } : todo
-            )
-          : []
+      queryClient.setQueryData<ITodo[]>(QUERY_KEY, (prev) =>
+        prev ? prev.map((todo) => (todo.id === id ? { ...todo, title, completed } : todo)) : [],
       )
       return { previousTodos }
     },

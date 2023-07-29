@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useState } from "react"
 import { FlatList, ListRenderItem, StyleSheet, View } from "react-native"
 import { spacing } from "../constants/style"
 import { useTodosQuery } from "../hooks/useTodosQuery"
@@ -25,18 +25,14 @@ export const TodoList = () => {
           return item.completed ? <Todo {...item} /> : null
       }
     },
-    [filter]
+    [filter],
   )
 
   return (
     <View style={styles.container}>
       <AddTodo onSubmit={addTodo} />
       <Filter filter={filter} onChange={onFilterChange} />
-      <FlatList
-        data={todos}
-        renderItem={renderTodo}
-        keyExtractor={item => item.id}
-      />
+      <FlatList data={todos} renderItem={renderTodo} keyExtractor={(item) => item.id} />
     </View>
   )
 }

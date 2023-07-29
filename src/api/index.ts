@@ -34,7 +34,7 @@ class Api {
 
   removeTodoById = async (id: string) => {
     const todos = await this.getTodos()
-    const index = todos.findIndex(todo => todo.id === id)
+    const index = todos.findIndex((todo) => todo.id === id)
     if (index === -1) return
 
     todos.splice(index, 1)
@@ -43,7 +43,7 @@ class Api {
 
   updateTodoById = async ({ id, title, completed }: ITodo) => {
     const todos = await this.getTodos()
-    const index = todos.findIndex(todo => todo.id === id)
+    const index = todos.findIndex((todo) => todo.id === id)
     if (index === -1) return
 
     todos[index] = { ...todos[index], title, completed }

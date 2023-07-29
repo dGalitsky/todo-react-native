@@ -19,7 +19,7 @@ export const AddTodo = ({ onSubmit }: IAddTodoProps) => {
       onSubmit(e.nativeEvent.text)
       inputRef.current?.clear()
     },
-    []
+    [onSubmit],
   )
 
   return (

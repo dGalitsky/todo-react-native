@@ -20,34 +20,21 @@ describe("Api", () => {
     const title = "New Todo"
     mockGetItem.mockResolvedValue(JSON.stringify([]))
     const id = await api.addTodo(title)
-    expect(mockSetItem).toHaveBeenCalledWith(
-      STORAGE_KEY,
-      JSON.stringify([{ id, title }])
-    )
+    expect(mockSetItem).toHaveBeenCalledWith(STORAGE_KEY, JSON.stringify([{ id, title }]))
   })
 
   it("removes a todo by id", async () => {
     const id = uuidv4()
-    mockGetItem.mockResolvedValue(
-      JSON.stringify([{ id, title: "Existing Todo" }])
-    )
+    mockGetItem.mockResolvedValue(JSON.stringify([{ id, title: "Existing Todo" }]))
     await api.removeTodoById(id)
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith(
-      STORAGE_KEY,
-      JSON.stringify([])
-    )
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(STORAGE_KEY, JSON.stringify([]))
   })
 
   it("updates a todo by id", async () => {
     const id = uuidv4()
     const title = "Updated Todo"
-    mockGetItem.mockResolvedValue(
-      JSON.stringify([{ id, title: "Existing Todo" }])
-    )
-    await api.updateTodoById(id, title)
-    expect(mockSetItem).toHaveBeenCalledWith(
-      STORAGE_KEY,
-      JSON.stringify([{ id, title }])
-    )
+    mockGetItem.mockResolvedValue(JSON.stringify([{ id, title: "Existing Todo" }]))
+    await api.updateTodoById({ id, title })
+    expect(mockSetItem).toHaveBeenCalledWith(STORAGE_KEY, JSON.stringify([{ id, title }]))
   })
 })

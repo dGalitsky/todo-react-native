@@ -16,7 +16,7 @@ export const Todo = ({ id, title, completed }: ITodo) => {
 
   const onPress = useCallback(() => {
     updateTodo({ id, title, completed: !completed })
-  }, [id, title, completed])
+  }, [updateTodo, id, title, completed])
 
   const onLongPress = useCallback(() => {
     setIsEditing(true)
@@ -24,14 +24,14 @@ export const Todo = ({ id, title, completed }: ITodo) => {
 
   const onDeletePress = useCallback(() => {
     removeTodo(id)
-  }, [id])
+  }, [id, removeTodo])
 
   const onSubmitEditing = useCallback(
     (e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => {
       updateTodo({ id, title: e.nativeEvent.text, completed })
       setIsEditing(false)
     },
-    []
+    [completed, id, updateTodo],
   )
 
   const onBlur = useCallback(() => {
@@ -39,11 +39,7 @@ export const Todo = ({ id, title, completed }: ITodo) => {
   }, [])
 
   return (
-    <TouchableOpacity
-      onPress={onPress}
-      onLongPress={onLongPress}
-      style={styles.container}
-    >
+    <TouchableOpacity onPress={onPress} onLongPress={onLongPress} style={styles.container}>
       {isEditing ? (
         <TextInput
           defaultValue={title}
