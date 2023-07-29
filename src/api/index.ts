@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { v4 as uuidv4 } from "uuid"
+import { randomUUID } from "expo-crypto"
 
 export const STORAGE_KEY = "todos"
 
@@ -19,7 +19,7 @@ class Api {
   }
 
   addTodo = async (title: string) => {
-    const id = uuidv4()
+    const id = randomUUID()
     const todo = {
       id,
       title,

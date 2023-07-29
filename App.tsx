@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { SafeAreaView, StatusBar, StyleSheet } from "react-native"
-import "react-native-get-random-values"
 import { TodoList } from "./src/components/TodoList"
 import { colors, spacing } from "./src/constants/style"
 

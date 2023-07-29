@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { api } from "../api"
-import { v4 as uuidv4 } from "uuid"
+import { randomUUID } from "expo-crypto"
 import { useCallback } from "react"
 
 // Obviously using React Query here is overkill, but it's a good example of how
@@ -29,7 +29,7 @@ export const useTodosQuery = () => {
       const previousTodos = queryClient.getQueryData<ITodo[]>(QUERY_KEY)
 
       // Fake id that will be replaced by a real one once the API call succeeds
-      const id = uuidv4()
+      const id = randomUUID()
       const todo = { id, title }
 
       queryClient.setQueryData<ITodo[]>(QUERY_KEY, (prev) => (prev ? [...prev, todo] : [todo]))
