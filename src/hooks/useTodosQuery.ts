@@ -1,8 +1,4 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { api } from "../api"
 import { v4 as uuidv4 } from "uuid"
 import { useCallback } from "react"
@@ -66,13 +62,15 @@ export const useTodosQuery = () => {
     onSettled,
   })
 
-  const updateTodoMutation = useMutation(api.updateTodoById, {
+  const { mutate: updateTodo } = useMutation(api.updateTodoById, {
     onMutate: async ({ id, title, completed }) => {
       await queryClient.cancelQueries(QUERY_KEY)
       const previousTodos = queryClient.getQueryData<ITodo[]>(QUERY_KEY)
       queryClient.setQueryData<ITodo[]>(QUERY_KEY, prev =>
         prev
-          ? prev.map(todo => (todo.id === id ? { ...todo, title } : todo))
+          ? prev.map(todo =>
+              todo.id === id ? { ...todo, title, completed } : todo
+            )
           : []
       )
       return { previousTodos }
@@ -87,7 +85,7 @@ export const useTodosQuery = () => {
     todos,
     addTodo,
     removeTodo,
-    updateTodo: updateTodoMutation.mutate,
+    updateTodo,
     ...queryRest,
   }
 }
